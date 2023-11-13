@@ -1,10 +1,14 @@
+#ifndef GPS_H
+#define GPS_H
+
 #include <TinyGPSPlus.h>
 
-TinyGPSPlus gps;
-
-typedef struct {
+typedef struct
+{
     int hour;
     int minute;
-} time;
+} GPSTime;
 
-time getGPSTime();
+GPSTime getGPSTime();
+
+#endif

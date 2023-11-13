@@ -1,6 +1,8 @@
 #include "gps.h"
 
-time getGPSTime()
+TinyGPSPlus gps;
+
+GPSTime getGPSTime()
 {
     if (gps.encode(Serial2.read()))
     {

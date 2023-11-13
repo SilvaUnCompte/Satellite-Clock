@@ -14,12 +14,7 @@ void loop()
 {
   if (Serial2.available() > 0)
   {
-    time t = getGPSTime();
+    GPSTime t = getGPSTime();
     Serial.print(t.hour + ":" + t.minute);
-  }
-
-  if (millis() > 5000 && gps.charsProcessed() < 10)
-  {
-    Serial.println(F("No GPS data received: check wiring"));
   }
 }
