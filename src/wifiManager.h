@@ -2,6 +2,7 @@
 #define WIFIMANAGER_H
 
 void setWifiAP();
-bool wifiSetup();
+void wifiSetup();
+bool connectToWifi();
 
 #endif

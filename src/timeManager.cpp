@@ -2,10 +2,7 @@
 #include <time.h>
 #include "timeManager.h"
 #include "wifiManager.h"
-
-// // Global var
-const char *ssid = "127.0.0.1";
-const char *password = "LeYuccaSappellePatrick";
+#include "LEDManager.h"
 
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 3600;
@@ -24,23 +21,12 @@ TimeObj getCurrentTime()
 
 void updateLocalTime()
 {
-  if(wifiSetup())
+  // check if wifi is connected
+  if(WiFi.status() != WL_CONNECTED)
   {
-    getCurrentTime();
+    setAllLED(true);
+    return;
   }
-
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    try_count++;
-    if (try_count > 10)
-    {
-      Serial.println("Failed to connect to WiFi");
-      return; // Will retry next day
-    }
-    delay(1000);
-    Serial.print(".");
-  }
-  Serial.println(" CONNECTED.");
 
   // init and get the time
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
@@ -49,5 +35,4 @@ void updateLocalTime()
 
   // disconnect WiFi as it's no longer needed
   WiFi.disconnect(true);
-  WiFi.mode(WIFI_OFF);
 }

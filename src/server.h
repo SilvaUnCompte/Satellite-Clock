@@ -5,7 +5,7 @@
 #include <ESPAsyncWebServer.h>
 
 void spiffsSetup();
-void setupServer();
+void serverSetup();
 void closeServer();
 
 #endif

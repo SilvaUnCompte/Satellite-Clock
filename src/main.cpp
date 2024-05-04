@@ -7,7 +7,7 @@
 
 void loop()
 {
-  delay(1000);
+  delay(1000); // TODO change to 10s
   TimeObj currentTime = getCurrentTime();
 
   Serial.print(F("Time: "));
@@ -15,16 +15,22 @@ void loop()
   Serial.print(F(":"));
   Serial.println(currentTime.minute);
 
+  // updateLocalTime(); 
+
   // LEDManager(currentTime.hour, currentTime.minute);
 }
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
-  spiffsSetup();
   ledSetup();
+  delay(50);
   wifiSetup();
+  delay(50);
+  spiffsSetup();
+  delay(50);
+  serverSetup();
 
   updateLocalTime();
 }

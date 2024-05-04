@@ -2,8 +2,8 @@
 #include "time.h"
 #include "LEDManager.h"
 
-int hour_pin_tab[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-int minute_pin_tab[] = {0, 1, 2, 3, 4, 5};
+int hour_pin_tab[] = {12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12};
+int minute_pin_tab[] = {12, 12, 12, 12, 12, 12};
 
 void LEDManager(int hour, int minute)
 {
@@ -21,9 +21,9 @@ void LEDManager(int hour, int minute)
   }
 }
 
-void controlAllLED(bool state)
+void setAllLED(bool state)
 {
-  Serial.println("Set all LED " + state); // TODO: Remove this line
+  // Serial.println(" Set all LED " + state); // TODO: Remove this line
   
   for (int i = 0; i < 13; i++)
   {
