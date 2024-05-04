@@ -3,12 +3,7 @@
 #include "time.h"
 #include "timeManager.h"
 #include "LEDManager.h"
-
-void setup()
-{
-  Serial.begin(115200);
-  updateLocalTime();
-}
+#include "wifiManager.h"
 
 void loop()
 {
@@ -20,5 +15,16 @@ void loop()
   Serial.print(F(":"));
   Serial.println(currentTime.minute);
 
-  LEDManager(currentTime.hour, currentTime.minute);
+  // LEDManager(currentTime.hour, currentTime.minute);
+}
+
+void setup()
+{
+  Serial.begin(115200);
+
+  spiffsSetup();
+  ledSetup();
+  wifiSetup();
+
+  updateLocalTime();
 }

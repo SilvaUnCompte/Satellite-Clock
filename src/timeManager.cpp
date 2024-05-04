@@ -1,15 +1,15 @@
 #include <WiFi.h>
-#include "time.h"
+#include <time.h>
 #include "timeManager.h"
+#include "wifiManager.h"
 
-// Global var
+// // Global var
 const char *ssid = "127.0.0.1";
 const char *password = "LeYuccaSappellePatrick";
 
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 3600;
 const int daylightOffset_sec = 3600;
-
 
 TimeObj getCurrentTime()
 {
@@ -22,13 +22,13 @@ TimeObj getCurrentTime()
   return {timeinfo.tm_hour, timeinfo.tm_min};
 }
 
-
 void updateLocalTime()
 {
-  // connect to WiFi
-  Serial.printf("Connecting to %s ", ssid);
-  WiFi.begin(ssid, password);
-  int try_count = 0;
+  if(wifiSetup())
+  {
+    getCurrentTime();
+  }
+
   while (WiFi.status() != WL_CONNECTED)
   {
     try_count++;
@@ -40,10 +40,12 @@ void updateLocalTime()
     delay(1000);
     Serial.print(".");
   }
-  Serial.println(" CONNECTED");
+  Serial.println(" CONNECTED.");
 
   // init and get the time
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+  getCurrentTime();
+  Serial.println("Time updated.");
 
   // disconnect WiFi as it's no longer needed
   WiFi.disconnect(true);

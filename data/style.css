@@ -1,0 +1,19 @@
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background: #e7e7e7;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    -webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+}
+#camera-stream {
+    position: absolute;
+    top: 50%;left: 50%;
+    transform: translate(0%, -50%);
+    width: 48%;
+}
+#direction-viewboard {
+    position: absolute;
+    top: 7%;left: 7%;
+}
