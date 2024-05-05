@@ -8,10 +8,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<!-- <body onload="init()"> -->
-<body>
-    <p>Coucou</p>
+<body onload="init()">
+
+    <div class="header">
+        <h1>Satelite-Clock</h1>
+    </div>
+    
+    <div class="container">
+        <div class="credentials">
+            <h2>Enter your credentials</h2>
+            <label for="ssid">Ssid:</label>
+            <input type="text" id="ssid" name="ssid" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button id="update">Send</button>
+
+            <p id="connection-status"></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Created by <a href="" target="_blank">Satelite-Clock</a></p>
+    </div>
+
 </body>
-<!-- <script type="text/javascript" src="script.js"></script> -->
+<script type="text/javascript" src="script.js"></script>
 
 </html>

@@ -1,5 +1,4 @@
 #include <WiFi.h>
-#include "time.h"
 #include "LEDManager.h"
 
 int hour_pin_tab[] = {12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12};
