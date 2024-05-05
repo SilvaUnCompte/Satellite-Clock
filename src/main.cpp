@@ -26,13 +26,12 @@ void setup()
   wifiSetup();
   delay(200);
   updateLocalTime();
-
-  // ledSetup();
-  // delay(200);
-
-  // spiffsSetup();
-  // delay(200);
-  // serverSetup();
-  // delay(200);
-  // Serial.println(F("Setup done"));
+  delay(200);
+  ledSetup();
+  delay(200);
+  spiffsSetup();
+  delay(200);
+  serverSetup();
+  delay(200);
+  Serial.println(F("Setup done"));
 }

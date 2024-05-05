@@ -4,9 +4,6 @@
 #include "timeManager.h"
 #include "wifiManager.h"
 
-const char *ssid = "127.0.0.1";
-const char *password = "LeYuccaSappellePatrick";
-
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 0;
 const int daylightOffset_sec = 3600;
@@ -25,7 +22,7 @@ TimeObj getCurrentTime()
 
 void updateLocalTime()
 {
-  if (connectToWifi())
+  if (connectToWifi()) // TODO: Add utc+ var
   {
     // Init and get the time
     configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
@@ -33,8 +30,8 @@ void updateLocalTime()
     getCurrentTime();
 
     // disconnect WiFi as it's no longer needed
+    delay(1000);
     WiFi.disconnect(true);
-    WiFi.mode(WIFI_OFF);
   }
   else
   {
