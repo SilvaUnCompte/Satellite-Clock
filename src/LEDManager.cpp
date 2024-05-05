@@ -22,7 +22,7 @@ void LEDManager(int hour, int minute)
 
 void setAllLED(bool state)
 {
-  // Serial.println(" Set all LED " + state); // TODO: Remove this line
+  Serial.println(" Set all LED " + state); // TODO: Remove this line
   
   for (int i = 0; i < 13; i++)
   {

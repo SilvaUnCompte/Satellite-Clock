@@ -15,20 +15,26 @@
     </div>
     
     <div class="container">
-        <div class="credentials">
+        <div class="config">
             <h2>Enter your credentials</h2>
             <label for="ssid">Ssid:</label>
             <input type="text" id="ssid" name="ssid" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            <button id="update">Send</button>
+            <label for="utc">Utc:</label>
+            <input type="number" id="utc">
+            <button id="update-config">Send</button>
 
             <p id="connection-status"></p>
+            
+            <button id="update-time">Update Time</button>
+
+            <p id="confirm-message"></p>
         </div>
     </div>
 
     <div class="footer">
-        <p>Created by <a href="" target="_blank">Satelite-Clock</a></p>
+        <p>Created by <a href="">Satelite-Clock</a></p>
     </div>
 
 </body>

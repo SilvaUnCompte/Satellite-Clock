@@ -8,6 +8,6 @@ typedef struct
 } TimeObj;
 
 TimeObj getCurrentTime();
-void updateLocalTime();
+bool updateLocalTime();
 
 #endif

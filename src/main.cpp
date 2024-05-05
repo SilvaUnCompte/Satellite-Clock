@@ -17,6 +17,7 @@ void loop()
   Serial.println(currentTime.minute);
 
   // LEDManager(currentTime.hour, currentTime.minute);
+  if (currentTime.hour == 5 && currentTime.minute == 0) {updateLocalTime();}
 }
 
 void setup()

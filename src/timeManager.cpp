@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
+#include <Preferences.h>
 #include "time.h"
 #include "timeManager.h"
 #include "wifiManager.h"
@@ -20,21 +21,28 @@ TimeObj getCurrentTime()
   return {timeinfo.tm_hour, timeinfo.tm_min};
 }
 
-void updateLocalTime()
+bool updateLocalTime()
 {
   if (connectToWifi()) // TODO: Add utc+ var
   {
+    Preferences preferences;
+    preferences.begin("config", true);  
+    int utc = preferences.getInt("utc", 0);
+    preferences.end();
+
     // Init and get the time
-    configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+    configTime(gmtOffset_sec, daylightOffset_sec*utc, ntpServer);
     Serial.println("Time updated.");
     getCurrentTime();
 
     // disconnect WiFi as it's no longer needed
     delay(1000);
     WiFi.disconnect(true);
+    return true;
   }
   else
   {
     Serial.println("No connection to update time.");
+    return false;
   }
 }

@@ -41,38 +41,46 @@ void serverSetup()
 
     // ------------------ Page Back ------------------
 
-    server.on("/update-credentials", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/update-config", HTTP_GET, [](AsyncWebServerRequest *request)
               {
-              if (request->hasParam("password") && request->hasParam("ssid"))
-              {
-                  // TODO: delete this line
-                  Serial.println("SSID: " + request->getParam("ssid")->value() + " Password: " + request->getParam("password")->value());
-  
-                  Preferences preferences;
-                  preferences.begin("wifi", false);
-                  preferences.putString("ssid", request->getParam("ssid")->value());
-                  preferences.putString("password", request->getParam("password")->value());
-                  preferences.end();
-  
-                  request->send(200);
-  
-                //   connectToWifi(); /TODO: Décider de comment update le temps avec l'interface
-              }
-              else
-              {
-                  request->send(400, "text/plain", "Missing parameters");
-              } });
+                if (request->hasParam("password") && request->hasParam("ssid") && request->hasParam("utc"))
+                {
+                    Serial.println("SSID: " + request->getParam("ssid")->value() + " Password: " + request->getParam("password")->value() + " utc: " + request->getParam("utc")->value());
+    
+                    Preferences preferences;
+                    preferences.begin("config", false);
+                    preferences.putString("ssid", request->getParam("ssid")->value());
+                    preferences.putString("password", request->getParam("password")->value());
+                    preferences.putInt("utc", request->getParam("utc")->value().toInt());
+                    preferences.end();
+    
+                    request->send(200);
+    
+                    connectToWifi();
+                } 
+                else {
+                    request->send(400, "text/text", "Missing parameters");
+                } });
 
-    server.on("/get-credentials", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/update-time", HTTP_GET, [](AsyncWebServerRequest *request)
+              { 
+                Serial.println("Time update requested");
+                String success = updateLocalTime() ? "Time updated" : "Something wrong appended";
+
+                request->send(200, "text/json", 
+                "{\"confirm_message\":\"" + success + "\"}"); });
+
+    server.on("/get-config", HTTP_GET, [](AsyncWebServerRequest *request)
               {
-                Serial.println("Credentials requested");
+                Serial.println("Variable requested");
 
                 Preferences preferences;
-                preferences.begin("wifi", true);                
+                preferences.begin("config", true);                
 
                 request->send(200, "text/json", 
                 "{\"ssid\":\"" + preferences.getString("ssid", "") + 
                 "\",\"password\":\"" + preferences.getString("password", "") + 
+                "\",\"utc\":\"" + preferences.getInt("utc", 0) +
                 "\"}");
 
                 preferences.end(); });

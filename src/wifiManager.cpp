@@ -7,14 +7,20 @@
 bool connectToWifi()
 {
     Preferences preferences;
-    preferences.begin("wifi", false);
-    WiFi.begin(preferences.getString("ssid", "nothing"), preferences.getString("ssid", "wrong"));
+    preferences.begin("config", false);
+    WiFi.begin(preferences.getString("ssid", "nothing"), preferences.getString("password", "wrong"));
     preferences.end();
 
     for (int i = 0; i < 12; i++)
     {
         delay(500);
         Serial.print('.' + String(WiFi.status()));
+
+        if(WiFi.status() == WL_NO_SSID_AVAIL)
+        {
+            Serial.println(" Wrong SSID");
+            return false;
+        }
 
         if (WiFi.status() == WL_CONNECTED)
         {
