@@ -20,7 +20,7 @@ function get_credentials() {
         });
 }
 
-function get_connection_status() {
+function get_connection_status() {  // TODO: Stoper la boucle si connecté. Effacer le champ après 5 secondes.
     var url = "/get-connection-status";
     fetch(url)
         .then(response => response.json())

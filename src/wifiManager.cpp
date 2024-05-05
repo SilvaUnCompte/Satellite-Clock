@@ -3,34 +3,33 @@
 #include <WiFi.h>
 #include "LEDManager.h"
 
-// Set Static IP address
-IPAddress gateway(192, 168, 0, 0);
-IPAddress subnet(255, 255, 255, 0);
-
 void setWifiAP()
 {
+    // Set Static IP address
     IPAddress local_IP(192, 168, 0, 1);
+    IPAddress gateway(192, 168, 0, 0);
+    IPAddress subnet(255, 255, 255, 0);
+
     WiFi.softAPConfig(local_IP, gateway, subnet);
     WiFi.softAP("ESP32-Satellite-Clock");
-    Serial.println("WiFi AP is set up");
-    Serial.print("IP Address: ");
-    Serial.println(WiFi.softAPIP());
+    Serial.println("WiFi AP is set up: " + WiFi.softAPIP().toString());
 }
 
 bool connectToWifi()
 {
     Preferences preferences;
     preferences.begin("wifi", false);
-    WiFi.begin(preferences.getString("ssid", "s"), preferences.getString("password", "p"));
+    String ssid = preferences.getString("ssid", "s");
+    String password = preferences.getString("password", "p");
     preferences.end();
 
-    IPAddress local_IP(192, 168, 0, 12);
-    WiFi.config(local_IP, gateway, subnet);
-    Serial.print("Connecting to WiFi.");
+    // Connect to Wi-Fi
+    Serial.println("Connecting to " + ssid);
+    WiFi.begin(ssid, password);
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 10; i++)
     {
-        delay(1000);
+        delay(500);
         Serial.print('.');
         if (WiFi.status() == WL_CONNECTED)
         {
@@ -42,12 +41,8 @@ bool connectToWifi()
     return false;
 }
 
-bool wifiSetup()
+void wifiSetup()
 {
-    // WiFi.mode(WIFI_AP_STA);
-    // setWifiAP();
-    // return connectToWifi();
-
-    WiFi.mode(WIFI_STA);
-    return connectToWifi();
+    WiFi.mode(WIFI_AP_STA);
+    setWifiAP();
 }

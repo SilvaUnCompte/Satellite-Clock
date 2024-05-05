@@ -23,12 +23,13 @@ void setup()
 {
   Serial.begin(9600);
 
+  wifiSetup();
+  delay(200);
   updateLocalTime();
 
   // ledSetup();
   // delay(200);
-  // wifiSetup();
-  // delay(200);
+
   // spiffsSetup();
   // delay(200);
   // serverSetup();

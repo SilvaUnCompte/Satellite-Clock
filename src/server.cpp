@@ -56,7 +56,7 @@ void serverSetup()
   
                   request->send(200);
   
-                  connectToWifi();
+                //   connectToWifi(); /TODO: Décider de comment update le temps avec l'interface
               }
               else
               {
