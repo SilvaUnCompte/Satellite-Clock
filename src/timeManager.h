@@ -8,6 +8,8 @@ typedef struct
 } TimeObj;
 
 TimeObj getCurrentTime();
+TimeObj getCurrentTimeBySatellite();
+TimeObj getCurrentTimeByWifi();
 bool updateLocalTime();
 
 #endif
