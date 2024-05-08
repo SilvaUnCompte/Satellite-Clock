@@ -1,4 +1,4 @@
-#include "gps.h"
+#include "gpsManager.h"
 
 TinyGPSPlus gps;
 
@@ -26,4 +26,13 @@ GPSTime getGPSTime()
     }
 
     return {0, 0};
+}
+
+int getNbSatellites()
+{
+    if (gps.satellites.isValid())
+    {
+        return gps.satellites.value();
+    }
+    return 0;
 }

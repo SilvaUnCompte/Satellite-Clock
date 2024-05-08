@@ -10,5 +10,6 @@ typedef struct
 } GPSTime;
 
 GPSTime getGPSTime();
+int getNbSatellites();
 
 #endif

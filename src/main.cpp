@@ -1,42 +1,38 @@
 #include <Arduino.h>
-#include "gps.h"
-
-void setup()
-{
-  Serial.begin(115200);
-  Serial2.begin(9600);
-
-  Serial.print(F("Testing TinyGPSPlus library v. "));
-  Serial.println(TinyGPSPlus::libraryVersion());
-}
-
-void LEDManager(int hour, int minute)
-{
-  int hour_pin_tab[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  int minute_pin_tab[] = {0, 1, 2, 3, 4, 5};
-  minute = floor(minute / 10);
-
-  for (int i = 0; i < 13; i++)
-  {
-    digitalWrite(hour_pin_tab[i], hour_pin_tab[i] == hour);
-  }
-
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(minute_pin_tab[i], minute_pin_tab[i] == minute);
-  }
-}
+#include <WiFi.h>
+#include "time.h"
+#include "timeManager.h"
+#include "LEDManager.h"
+#include "wifiManager.h"
 
 void loop()
 {
-  GPSTime time = getGPSTime();
+  delay(1000); // TODO change to 10s
+
+  TimeObj currentTime = getCurrentTime();
 
   Serial.print(F("Time: "));
-  Serial.print(time.hour);
+  Serial.print(currentTime.hour);
   Serial.print(F(":"));
-  Serial.println(time.minute);
+  Serial.println(currentTime.minute);
 
-  delay(1000);
+  // LEDManager(currentTime.hour, currentTime.minute);
+  if (currentTime.hour == 5 && currentTime.minute == 0) {updateLocalTime();}
+}
 
-  LEDManager(time.hour, time.minute);
+void setup()
+{
+  Serial.begin(9600);
+
+  wifiSetup();
+  delay(200);
+  updateLocalTime();
+  delay(200);
+  ledSetup();
+  delay(200);
+  spiffsSetup();
+  delay(200);
+  serverSetup();
+  delay(200);
+  Serial.println(F("Setup done"));
 }
