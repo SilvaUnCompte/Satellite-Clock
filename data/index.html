@@ -13,29 +13,39 @@
     <div class="header">
         <h1>Satelite-Clock</h1>
     </div>
-    
+
     <div class="container">
-        <div class="config">
-            <h2>Enter your credentials</h2>
-            <label for="ssid">Ssid:</label>
-            <input type="text" id="ssid" name="ssid" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <label for="utc">Utc:</label>
-            <input type="number" id="utc">
-            <button id="update-config">Send</button>
+        <div class="subcontainer">
+            <h3>Enter your credentials</h2>
+                <label for="ssid">Ssid:</label>
+                <input type="text" id="ssid" name="ssid" required>
+                <label for="password">Password:</label>
+                <input type="text" id="password" name="password" required>
+                <label for="utc">Utc:</label>
+                <input type="number" id="utc" min="-12" max="12">
+                <button id="update-config">Update</button>
+        </div>
 
+        <hr />
+
+        <div class="subcontainer">
+            <h3>Miscellaneous</h3>
+
+            <p>Satelite detected: <span id="satellite-nb">0</span></p>
+            <button id="test-wifi">Test Wifi Connexion</button>
             <p id="connection-status"></p>
-            
-            <button id="update-time">Update Time</button>
+            <button id="test-satellite">Test Satelite Connexion</button>
+            <p id="satellite-data"></p>
 
+            <button id="update-time">Update Time by Wifi</button>
             <p id="confirm-message"></p>
         </div>
+
     </div>
 
-    <div class="footer">
-        <p>Created by <a href="">Satelite-Clock</a></p>
-    </div>
+    <footer>
+        <p>Created by <a href="https://github.com/SilvaUnCompte/satellite-clock">Selyan Quesnot</a></p>
+    </footer>
 
 </body>
 <script type="text/javascript" src="script.js"></script>
