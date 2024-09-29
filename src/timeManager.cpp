@@ -12,7 +12,7 @@ const int daylightOffset_sec = 3600;
 
 TimeObj getCurrentTime()
 {
-  return getNbSatellites() > 1 ? getCurrentTimeBySatellite() : getCurrentTimeByWifi();
+  return getNbSatellites() >= 1 ? getCurrentTimeBySatellite() : getCurrentTimeByWifi();
 }
 
 TimeObj getCurrentTimeBySatellite()
