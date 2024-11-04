@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <Preferences.h>
+#include "TimeObj.h"
 #include "time.h"
 #include "timeManager.h"
 #include "wifiManager.h"

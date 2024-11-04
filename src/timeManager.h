@@ -1,11 +1,7 @@
 #ifndef TIMEMANAGER_H
 #define TIMEMANAGER_H
 
-typedef struct
-{
-    int hour;
-    int minute;
-} TimeObj;
+#include "TimeObj.h"
 
 TimeObj getCurrentTime();
 TimeObj getCurrentTimeBySatellite();

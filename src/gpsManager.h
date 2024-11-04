@@ -3,13 +3,9 @@
 
 #include <TinyGPSPlus.h>
 
-typedef struct
-{
-    int hour;
-    int minute;
-} GPSTime;
+#include "TimeObj.h"
 
-GPSTime getGPSTime();
+TimeObj getGPSTime();
 int getNbSatellites();
 
 #endif

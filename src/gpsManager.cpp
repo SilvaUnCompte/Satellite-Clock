@@ -2,7 +2,7 @@
 
 TinyGPSPlus gps;
 
-GPSTime getGPSTime()
+TimeObj getGPSTime()
 {
     if (gps.encode(Serial2.read()))
     {
