@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <WiFi.h>
-#include <Preferences.h>
 #include "TimeObj.h"
 #include "time.h"
 #include "timeManager.h"
@@ -9,7 +8,7 @@
 
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 0;
-const int daylightOffset_sec = 3600;
+const int daylightOffset_sec = 0;
 
 TimeObj getCurrentTime()
 {
@@ -30,7 +29,7 @@ TimeObj getCurrentTimeByWifi()
   struct tm timeinfo;
   if (!getLocalTime(&timeinfo))
   {
-    Serial.println("Failed to obtain time");
+    // Serial.println("Failed to obtain time");
     return {0, 0};
   }
 
@@ -41,14 +40,9 @@ bool updateLocalTime()
 {
   if (connectToWifi())
   {
-    Preferences preferences;
-    preferences.begin("config", true);
-    int utc = preferences.getInt("utc", 0);
-    preferences.end();
-
     // Init and get the time
-    configTime(gmtOffset_sec, daylightOffset_sec * utc, ntpServer);
-    Serial.println("Time updated.");
+    configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+    // Serial.println("Time updated.");
     getCurrentTime();
 
     // disconnect WiFi as it's no longer needed
@@ -58,7 +52,7 @@ bool updateLocalTime()
   }
   else
   {
-    Serial.println("No connection to update time.");
+    // Serial.println("No connection to update time.");
     return false;
   }
 }

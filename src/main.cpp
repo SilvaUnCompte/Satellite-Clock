@@ -8,17 +8,17 @@
 
 void loop()
 {
-  delay(1000); // TODO change to 600s
-
   TimeObj currentTime = getCurrentTime(); // TODO comment all Serial.print
 
-  Serial.print(F("Time: "));
-  Serial.print(currentTime.hour);
-  Serial.print(F(":"));
-  Serial.println(currentTime.minute);
+  // Serial.print(F("Time: "));
+  // Serial.print(currentTime.hour);
+  // Serial.print(F(":"));
+  // Serial.println(currentTime.minute);
 
   LEDManager(currentTime.hour, currentTime.minute);
   if (currentTime.hour == 5 && currentTime.minute == 0) {updateLocalTime();}
+
+  delay(60000);
 }
 
 void setup()
@@ -35,5 +35,5 @@ void setup()
   delay(200);
   serverSetup();
   delay(200);
-  Serial.println(F("Setup done"));
+  // Serial.println(F("Setup done"));
 }

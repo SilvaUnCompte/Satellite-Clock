@@ -14,21 +14,21 @@ bool connectToWifi()
     for (int i = 0; i < 12; i++)
     {
         delay(500);
-        Serial.print('.' + String(WiFi.status()));
+        // Serial.print('.' + String(WiFi.status()));
 
         if(WiFi.status() == WL_NO_SSID_AVAIL)
         {
-            Serial.println(" Wrong SSID");
+            // Serial.println(" Wrong SSID");
             return false;
         }
 
         if (WiFi.status() == WL_CONNECTED)
         {
-            Serial.println(" Connected!");
+            // Serial.println(" Connected!");
             return true;
         }
     }
-    Serial.println(" Connection failed.");
+    // Serial.println(" Connection failed.");
     return false;
 }
 
@@ -43,5 +43,5 @@ void wifiSetup()
     WiFi.softAPConfig(local_IP, gateway, subnet);
     WiFi.softAP("ESP32-Satellite-Clock");
     
-    Serial.println("WiFi AP is set up: " + WiFi.softAPIP().toString());
+    // Serial.println("WiFi AP is set up: " + WiFi.softAPIP().toString());
 }

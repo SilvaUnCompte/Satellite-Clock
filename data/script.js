@@ -6,18 +6,19 @@ var utc_field = document.getElementById("utc");
 var update_config_button = document.getElementById("update-config");
 var update_time_button = document.getElementById("update-time");
 var test_wifi_button = document.getElementById("test-wifi");
+
 var test_satellite_button = document.getElementById("test-satellite");
+var satellite_nb = document.getElementById("satellite-nb");
 
 var confirm_message = document.getElementById("confirm-message");
 var connection_status = document.getElementById("connection-status");
-var satellite_data = document.getElementById("satellite-data");
 
 function init() {
     get_config();
     update_config_button.addEventListener("click", update_config);
     test_wifi_button.addEventListener("click", update_config);
     update_time_button.addEventListener("click", update_time);
-    test_satellite_button.addEventListener("click", get_satellite_data);
+    test_satellite_button.addEventListener("click", get_satellite_count);
 }
 
 function get_config() {
@@ -86,9 +87,9 @@ function update_time() {
         .then(data => confirm_message.innerHTML = data.confirm_message);
 }
 
-function get_satellite_data() {
-    satellite_data.innerHTML = "Loading...";
-    fetch("/get-satellite-data") // TODO
+function get_satellite_count() {
+    satellite_nb.innerHTML = "Loading...";
+    fetch("/get-satellite-count")
         .then(response => response.json())
-        .then(data => satellite_data.innerHTML = data.satellite_data);
+        .then(data => satellite_nb.innerHTML = data);
 }

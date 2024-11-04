@@ -2,6 +2,7 @@
 #include <Preferences.h>
 #include "wifiManager.h"
 #include "timeManager.h"
+#include "gpsManager.h"
 #include "server.h"
 
 AsyncWebServer server(80);
@@ -10,7 +11,7 @@ void spiffsSetup()
 {
     if (!SPIFFS.begin())
     {
-        Serial.println("SPIFFS error");
+        // Serial.println("SPIFFS error");
         return;
     }
 
@@ -19,8 +20,8 @@ void spiffsSetup()
 
     while (file)
     {
-        Serial.print("File: ");
-        Serial.println(file.name());
+        // Serial.print("File: ");
+        // Serial.println(file.name());
         file.close();
         file = root.openNextFile();
     }
@@ -45,7 +46,7 @@ void serverSetup()
               {
                 if (request->hasParam("password") && request->hasParam("ssid") && request->hasParam("utc"))
                 {
-                    Serial.println("SSID: " + request->getParam("ssid")->value() + " Password: " + request->getParam("password")->value() + " utc: " + request->getParam("utc")->value());
+                    // Serial.println("SSID: " + request->getParam("ssid")->value() + " Password: " + request->getParam("password")->value() + " utc: " + request->getParam("utc")->value());
     
                     Preferences preferences;
                     preferences.begin("config", false);
@@ -64,7 +65,7 @@ void serverSetup()
 
     server.on("/update-time", HTTP_GET, [](AsyncWebServerRequest *request)
               { 
-                Serial.println("Time update requested");
+                // Serial.println("Time update requested");
                 String success = updateLocalTime() ? "Time updated" : "Something wrong appended";
 
                 request->send(200, "text/json", 
@@ -72,7 +73,7 @@ void serverSetup()
 
     server.on("/get-config", HTTP_GET, [](AsyncWebServerRequest *request)
               {
-                Serial.println("Variable requested");
+                // Serial.println("Variable requested");
 
                 Preferences preferences;
                 preferences.begin("config", true);                
@@ -87,9 +88,13 @@ void serverSetup()
 
     server.on("/get-connection-status", HTTP_GET, [](AsyncWebServerRequest *request)
               {
-                Serial.println("Connection status requested: " + String(WiFi.status()));
+                // Serial.println("Connection status requested: " + String(WiFi.status()));
                 request->send(200, "text/text", String(WiFi.status())); });
 
+     server.on("/get-satellite-count", HTTP_GET, [](AsyncWebServerRequest *request)
+              {
+                request->send(200, "text/text", String(getNbSatellites())); });
+
     server.begin();
-    Serial.println("HTTP server started");
+    // Serial.println("HTTP server started");
 }
