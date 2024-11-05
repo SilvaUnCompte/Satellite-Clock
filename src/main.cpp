@@ -6,19 +6,24 @@
 #include "LEDManager.h"
 #include "wifiManager.h"
 
+int previous = -1;
+
 void loop()
 {
-  TimeObj currentTime = getCurrentTime(); // TODO comment all Serial.print
+  TimeObj currentTime = getCurrentTime();
 
   // Serial.print(F("Time: "));
   // Serial.print(currentTime.hour);
   // Serial.print(F(":"));
   // Serial.println(currentTime.minute);
 
-  LEDManager(currentTime.hour, currentTime.minute);
-  if (currentTime.hour == 5 && currentTime.minute == 0) {updateLocalTime();}
-
-  delay(60000);
+  if (currentTime.minute != previous)
+  {
+    LEDManager(currentTime.hour, currentTime.minute);
+    if (currentTime.hour == 5 && currentTime.minute == 0) { updateLocalTime(); }
+    previous = currentTime.minute;
+  }
+  delay(1000);
 }
 
 void setup()

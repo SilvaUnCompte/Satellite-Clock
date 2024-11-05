@@ -2,6 +2,7 @@
 #include <Preferences.h>
 #include "wifiManager.h"
 #include "timeManager.h"
+#include "LEDManager.h"
 #include "gpsManager.h"
 #include "server.h"
 
@@ -44,7 +45,7 @@ void serverSetup()
 
     server.on("/update-config", HTTP_GET, [](AsyncWebServerRequest *request)
               {
-                if (request->hasParam("password") && request->hasParam("ssid") && request->hasParam("utc"))
+                if (request->hasParam("password") && request->hasParam("ssid") && request->hasParam("utc") && request->hasParam("on_off"))
                 {
                     // Serial.println("SSID: " + request->getParam("ssid")->value() + " Password: " + request->getParam("password")->value() + " utc: " + request->getParam("utc")->value());
     
@@ -53,11 +54,15 @@ void serverSetup()
                     preferences.putString("ssid", request->getParam("ssid")->value());
                     preferences.putString("password", request->getParam("password")->value());
                     preferences.putInt("utc", request->getParam("utc")->value().toInt());
+                    preferences.putInt("on_off", request->getParam("on_off")->value().toInt());
                     preferences.end();
     
                     request->send(200);
-    
-                    connectToWifi();
+                    
+                    if (connectToWifi()){
+                        TimeObj currentTime = getCurrentTime();
+                        LEDManager(currentTime.hour, currentTime.minute);
+                    }
                 } 
                 else {
                     request->send(400, "text/text", "Missing parameters");
@@ -66,10 +71,19 @@ void serverSetup()
     server.on("/update-time", HTTP_GET, [](AsyncWebServerRequest *request)
               { 
                 // Serial.println("Time update requested");
-                String success = updateLocalTime() ? "Time updated" : "Something wrong appended";
+                String confirm_message;
+
+                if (updateLocalTime()){
+                    confirm_message = "Time updated";
+                    TimeObj currentTime = getCurrentTime();
+                    LEDManager(currentTime.hour, currentTime.minute);
+                }
+                else{
+                    confirm_message = "Something wrong appended";
+                }
 
                 request->send(200, "text/json", 
-                "{\"confirm_message\":\"" + success + "\"}"); });
+                "{\"confirm_message\":\"" + confirm_message + "\"}"); });
 
     server.on("/get-config", HTTP_GET, [](AsyncWebServerRequest *request)
               {
@@ -82,6 +96,7 @@ void serverSetup()
                 "{\"ssid\":\"" + preferences.getString("ssid", "") + 
                 "\",\"password\":\"" + preferences.getString("password", "") + 
                 "\",\"utc\":\"" + preferences.getInt("utc", 0) +
+                "\",\"on_off\":\"" + preferences.getInt("on_off", 1) +
                 "\"}");
 
                 preferences.end(); });
@@ -91,9 +106,8 @@ void serverSetup()
                 // Serial.println("Connection status requested: " + String(WiFi.status()));
                 request->send(200, "text/text", String(WiFi.status())); });
 
-     server.on("/get-satellite-count", HTTP_GET, [](AsyncWebServerRequest *request)
-              {
-                request->send(200, "text/text", String(getNbSatellites())); });
+    server.on("/get-satellite-count", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send(200, "text/text", String(getNbSatellites())); });
 
     server.begin();
     // Serial.println("HTTP server started");

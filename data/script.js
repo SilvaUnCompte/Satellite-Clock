@@ -2,6 +2,7 @@
 var ssid_field = document.getElementById("ssid");
 var password_field = document.getElementById("password");
 var utc_field = document.getElementById("utc");
+var off_field = document.getElementById("off");
 
 var update_config_button = document.getElementById("update-config");
 var update_time_button = document.getElementById("update-time");
@@ -29,6 +30,7 @@ function get_config() {
             ssid_field.value = data.ssid;
             password_field.value = data.password;
             utc_field.value = data.utc;
+            off_field.checked = (data.on_off == 0);
         });
 }
 
@@ -73,7 +75,7 @@ function get_connection_status() {
 }
 
 function update_config() {
-    var url = "/update-config?ssid=" + ssid_field.value + "&password=" + password_field.value + "&utc=" + utc_field.value;
+    var url = "/update-config?ssid=" + ssid_field.value + "&password=" + password_field.value + "&utc=" + utc_field.value + "&on_off=" + (off_field.checked? "0" : "1");
     fetch(url)
         .then(data => console.log(data));
 

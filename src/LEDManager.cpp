@@ -15,24 +15,27 @@ void LEDManager(int hour, int minute)
 	Preferences preferences;
 	preferences.begin("config", true);
 	hour += preferences.getInt("utc", 0);
+	int on_off = preferences.getInt("on_off", 1);
 	preferences.end();
 
-	bool isMidnight = hour == 0;
+	bool isMidday = (hour == 12);
 
 	minute = floor(minute / 10);
 	hour = hour % 12;
 
 	setAllLED(false);
-	digitalWrite(PIN_HOUR, HIGH);
+	if (on_off == 0){return;}
+
 
 	// Set the hour LED
 	if (hour != 0)
 	{
 		digitalWrite(hour_pin_tab[hour - 1], HIGH);
+		digitalWrite(PIN_HOUR, HIGH); // 'Heure'
 	}
 	else
 	{
-		digitalWrite(isMidnight ? PIN_MIDNIGHT : PIN_MIDDAY, HIGH);
+		digitalWrite(isMidday ? PIN_MIDDAY : PIN_MIDNIGHT, HIGH);
 	}
 
 	// Set the minute LED
