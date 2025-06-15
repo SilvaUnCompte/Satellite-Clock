@@ -23,6 +23,11 @@
                 <input type="text" id="password" name="password" required>
                 <label for="utc">Utc:</label>
                 <input type="number" id="utc" min="-12" max="12">
+                <hr width="100%" />
+                <label for="on_start">Is on from:</label>
+                <input type="number" id="on_start" min="0" max="24" name="on_start" required>
+                <label for="on_end">to:</label>
+                <input type="number" id="on_end" min="0" max="24" name="on_end" required>
                 <label for="off">Night mode:</label>
                 <input type="checkbox" id="off" name="off">
                 <button id="update-config">Update</button>
@@ -35,7 +40,7 @@
 
             <button id="test-wifi">Test Wifi Connexion</button>
             <p id="connection-status"></p>
-            
+
             <button id="test-satellite">Test Satelite Detected</button>
             <p>Satelite detected: <span id="satellite-nb">0</span></p>
 

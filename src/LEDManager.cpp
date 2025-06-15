@@ -14,24 +14,27 @@ void LEDManager(int hour, int minute)
 {
 	Preferences preferences;
 	preferences.begin("config", true);
-	hour += preferences.getInt("utc", 0);
 	int on_off = preferences.getInt("on_off", 1);
+	hour += preferences.getInt("utc", 0);
 	preferences.end();
 
-	bool isMidday = (hour == 12);
+	// Off system
+	setAllLED(false);
+	if (on_off == 0 || (hour < preferences.getInt("on_start", 0) || hour > preferences.getInt("on_end", 24)))
+	{
+		return;
+	}
 
+	// Set the hour and minute to the correct values
+	bool isMidday = (hour == 12);
 	minute = floor(minute / 10);
 	hour = hour % 12;
-
-	setAllLED(false);
-	if (on_off == 0){return;}
-
 
 	// Set the hour LED
 	if (hour != 0)
 	{
 		digitalWrite(hour_pin_tab[hour - 1], HIGH);
-		digitalWrite(PIN_HOUR, HIGH); // 'Heure'
+		digitalWrite(PIN_HOUR, HIGH); // show word 'Heure'
 	}
 	else
 	{
@@ -43,7 +46,8 @@ void LEDManager(int hour, int minute)
 	{
 		digitalWrite(minute_pin_tab[minute - 1][0], HIGH);
 
-		if (minute >= 4) {
+		if (minute >= 4)
+		{
 			digitalWrite(minute_pin_tab[minute - 1][1], HIGH);
 		}
 	}

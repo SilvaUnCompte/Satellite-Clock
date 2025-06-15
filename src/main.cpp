@@ -20,10 +20,10 @@ void loop()
   if (currentTime.minute != previous)
   {
     LEDManager(currentTime.hour, currentTime.minute);
-    if (currentTime.hour == 5 && currentTime.minute == 0) { updateLocalTime(); }
+    if (currentTime.hour == 1 && currentTime.minute == 0) { updateLocalTime(); }
     previous = currentTime.minute;
   }
-  delay(1000);
+  delay(10000); // 10s
 }
 
 void setup()

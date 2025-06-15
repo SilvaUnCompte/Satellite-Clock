@@ -45,9 +45,9 @@ void serverSetup()
 
     server.on("/update-config", HTTP_GET, [](AsyncWebServerRequest *request)
               {
-                if (request->hasParam("password") && request->hasParam("ssid") && request->hasParam("utc") && request->hasParam("on_off"))
+                if (request->hasParam("password") && request->hasParam("ssid") && request->hasParam("utc") && request->hasParam("on_off") && request->hasParam("on_start") && request->hasParam("on_end"))
                 {
-                    // Serial.println("SSID: " + request->getParam("ssid")->value() + " Password: " + request->getParam("password")->value() + " utc: " + request->getParam("utc")->value());
+                    // Serial.println("SSID: " + request->getParam("ssid")->value() + " Password: " + request->getParam("password")->value() + " utc: " + request->getParam("utc")->value() + " on_off: " + request->getParam("on_off")->value() + " on_start: " + request->getParam("on_start")->value() + " on_end: " + request->getParam("on_end")->value());
     
                     Preferences preferences;
                     preferences.begin("config", false);
@@ -55,6 +55,8 @@ void serverSetup()
                     preferences.putString("password", request->getParam("password")->value());
                     preferences.putInt("utc", request->getParam("utc")->value().toInt());
                     preferences.putInt("on_off", request->getParam("on_off")->value().toInt());
+                    preferences.putInt("on_start", request->getParam("on_start")->value().toInt());
+                    preferences.putInt("on_end", request->getParam("on_end")->value().toInt());
                     preferences.end();
     
                     request->send(200);
@@ -97,6 +99,8 @@ void serverSetup()
                 "\",\"password\":\"" + preferences.getString("password", "") + 
                 "\",\"utc\":\"" + preferences.getInt("utc", 0) +
                 "\",\"on_off\":\"" + preferences.getInt("on_off", 1) +
+                "\",\"on_start\":\"" + preferences.getInt("on_start", 0) +
+                "\",\"on_end\":\"" + preferences.getInt("on_end", 24) +
                 "\"}");
 
                 preferences.end(); });
