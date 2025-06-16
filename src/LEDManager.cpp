@@ -12,6 +12,8 @@ int minute_pin_tab[5][2] = {{03}, {23}, {19}, {21, 18}, {22, 00}};										 // 
 
 bool getLEDStatus(int on_off, float on_start, float on_end, int hour, int minute)
 {
+	float time = hour + (minute / 60.0);
+
 	if (on_off == 0)
 	{
 		return false; // LED is off
