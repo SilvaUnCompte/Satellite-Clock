@@ -12,17 +12,6 @@ int minute_pin_tab[5][2] = {{03}, {23}, {19}, {21, 18}, {22, 00}};										 // 
 
 bool getLEDStatus(int on_off, float on_start, float on_end, int hour, int minute)
 {
-	Serial.print("on_off: " + on_off);
-	Serial.print(" on_start: ");
-	Serial.print(on_start);
-	Serial.print(" on_end: ");
-	Serial.print(on_end);
-	Serial.print(" minute: " + minute);
-
-	float time = hour + (minute / 60.0);
-	Serial.println(" time: ");
-	Serial.println(time);
-
 	if (on_off == 0)
 	{
 		return false; // LED is off
@@ -52,10 +41,8 @@ void LEDManager(int hour, int minute)
 	setAllLED(false);
 	if (getLEDStatus(on_off, on_start, on_end, hour, minute) == false)
 	{
-		Serial.println("LED is off");
 		return; // If LED is off, do not proceed
 	}
-	Serial.println("LED is on");
 
 	// Set the hour and minute to the correct values
 	bool isMidday = (hour == 12);
