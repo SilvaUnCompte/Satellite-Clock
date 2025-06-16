@@ -10,20 +10,52 @@ int pin_used[21] = {00, 01, 02, 03, 04, 05, 12, 13, 14, 16, 17, 18, 19, 21, 22, 
 int hour_pin_tab[11] = {33, 26, 13, 02, 01, 05, 25, 27, 12, 17, 16};									 // Commence par "une"
 int minute_pin_tab[5][2] = {{03}, {23}, {19}, {21, 18}, {22, 00}};										 // Commence par "dix"
 
+bool getLEDStatus(int on_off, float on_start, float on_end, int hour, int minute)
+{
+	Serial.print("on_off: " + on_off);
+	Serial.print(" on_start: ");
+	Serial.print(on_start);
+	Serial.print(" on_end: ");
+	Serial.print(on_end);
+	Serial.print(" minute: " + minute);
+
+	float time = hour + (minute / 60.0);
+	Serial.println(" time: ");
+	Serial.println(time);
+
+	if (on_off == 0)
+	{
+		return false; // LED is off
+	}
+
+	if (on_start < on_end)
+	{
+		return (time >= on_start && time <= on_end);
+	}
+	else
+	{
+		return (time >= on_start || time <= on_end); // If start == end, always on
+	}
+}
+
 void LEDManager(int hour, int minute)
 {
 	Preferences preferences;
 	preferences.begin("config", true);
 	int on_off = preferences.getInt("on_off", 1);
+	float on_start = preferences.getFloat("on_start", 0.0);
+	float on_end = preferences.getFloat("on_end", 24.0);
 	hour += preferences.getInt("utc", 0);
 	preferences.end();
 
 	// Off system
 	setAllLED(false);
-	if (on_off == 0 || (hour < preferences.getInt("on_start", 0) || hour > preferences.getInt("on_end", 24)))
+	if (getLEDStatus(on_off, on_start, on_end, hour, minute) == false)
 	{
-		return;
+		Serial.println("LED is off");
+		return; // If LED is off, do not proceed
 	}
+	Serial.println("LED is on");
 
 	// Set the hour and minute to the correct values
 	bool isMidday = (hour == 12);

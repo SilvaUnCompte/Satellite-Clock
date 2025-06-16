@@ -12,6 +12,14 @@ void loop()
 {
   TimeObj currentTime = getCurrentTime();
 
+  if (!Serial) {
+    Serial.begin(11500);
+    while (!Serial) {
+      ; // wait for serial port to connect. Needed for native USB
+    }
+  }
+  Serial.print(F("BipBip!"));
+
   // Serial.print(F("Time: "));
   // Serial.print(currentTime.hour);
   // Serial.print(F(":"));

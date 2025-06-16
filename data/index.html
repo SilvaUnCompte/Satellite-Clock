@@ -25,9 +25,9 @@
                 <input type="number" id="utc" min="-12" max="12">
                 <hr width="100%" />
                 <label for="on_start">Is on from:</label>
-                <input type="number" id="on_start" min="0" max="24" name="on_start" required>
+                <input type="number" step="0.5" id="on_start" min="0" max="24" name="on_start" required>
                 <label for="on_end">to:</label>
-                <input type="number" id="on_end" min="0" max="24" name="on_end" required>
+                <input type="number" step="0.5" id="on_end" min="0" max="24" name="on_end" required>
                 <label for="off">Night mode:</label>
                 <input type="checkbox" id="off" name="off">
                 <button id="update-config">Update</button>

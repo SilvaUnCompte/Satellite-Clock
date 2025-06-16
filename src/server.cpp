@@ -55,8 +55,8 @@ void serverSetup()
                     preferences.putString("password", request->getParam("password")->value());
                     preferences.putInt("utc", request->getParam("utc")->value().toInt());
                     preferences.putInt("on_off", request->getParam("on_off")->value().toInt());
-                    preferences.putInt("on_start", request->getParam("on_start")->value().toInt());
-                    preferences.putInt("on_end", request->getParam("on_end")->value().toInt());
+                    preferences.putFloat("on_start", request->getParam("on_start")->value().toFloat());
+                    preferences.putFloat("on_end", request->getParam("on_end")->value().toFloat());
                     preferences.end();
     
                     request->send(200);
@@ -99,8 +99,8 @@ void serverSetup()
                 "\",\"password\":\"" + preferences.getString("password", "") + 
                 "\",\"utc\":\"" + preferences.getInt("utc", 0) +
                 "\",\"on_off\":\"" + preferences.getInt("on_off", 1) +
-                "\",\"on_start\":\"" + preferences.getInt("on_start", 0) +
-                "\",\"on_end\":\"" + preferences.getInt("on_end", 24) +
+                "\",\"on_start\":\"" + preferences.getFloat("on_start", 0.0) +
+                "\",\"on_end\":\"" + preferences.getFloat("on_end", 24.0) +
                 "\"}");
 
                 preferences.end(); });
