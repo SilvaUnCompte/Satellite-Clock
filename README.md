@@ -1,6 +1,10 @@
 # Satellite Clock
 **Satellite Clock** is an LED word clock that displays time using illuminated words instead of digital digits. The device automatically synchronizes with GPS satellites for precise timekeeping and falls back to NTP over WiFi when GPS is unavailable. It features a web-based configuration interface for easy setup and customization.
 
+![IMG_20240217_141223](https://github.com/user-attachments/assets/4743ee36-cb9b-4934-b241-2f283d4cc874)
+
+![20241104_195330~2](https://github.com/user-attachments/assets/10c6837e-6e05-46a8-84f4-6e2ec4651e7d)
+
 ## Features
 
 - **Dual Time Source**: Primary GPS synchronization with NTP WiFi fallback
@@ -17,6 +21,9 @@
 - **GPS Module** connected to Serial2
 - **LEDs** for word display (connected to specific GPIO pins)
 - **WiFi Connection** for initial time sync and web interface
+- **Wooden box** frame (optional, for aesthetic purposes)
+
+![IMG_20240215_150541](https://github.com/user-attachments/assets/883b16bc-f70b-45b1-b1ae-4faf85adc2c8)
 
 ## Pin Configuration
 
